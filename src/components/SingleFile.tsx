@@ -15,6 +15,7 @@ function SingleFile({
   isFile,
   isOpen,
   selected,
+  highlighted,
   onClick,
   onDragStart,
   onDragOver,
@@ -26,6 +27,7 @@ function SingleFile({
   isFile: boolean;
   isOpen: boolean;
   selected: boolean;
+  highlighted: boolean;
   onClick: (id: number) => void;
   onDragStart: (id: number, event: React.DragEvent) => void;
   onDragOver: (id: number, event: React.DragEvent) => void;
@@ -35,6 +37,7 @@ function SingleFile({
     <Wrapper
       depth={depth}
       selected={selected}
+      highlighted={highlighted}
       onClick={() => onClick(id)}
       draggable={true}
       onDragStart={(event) => onDragStart(id, event)}
@@ -63,7 +66,11 @@ function SingleFile({
   );
 }
 
-const Wrapper = styled.div<{ depth: number; selected: boolean }>`
+const Wrapper = styled.div<{
+  depth: number;
+  selected: boolean;
+  highlighted: boolean;
+}>`
   position: relative;
   display: flex;
   align-items: center;
@@ -71,7 +78,7 @@ const Wrapper = styled.div<{ depth: number; selected: boolean }>`
   padding-left: ${(props: any) => 12 + 10 * props.depth + "px"};
   cursor: pointer;
   background-color: ${(props: any) =>
-    props.selected ? colors.dark3 : "transparent"};
+    props.selected ? colors.dark3 : props.highlighted ? colors.dark2 : "transparent"};
   &:hover {
     background-color: ${(props: any) =>
       props.selected ? colors.dark3 : colors.dark2};

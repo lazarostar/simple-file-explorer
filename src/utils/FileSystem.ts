@@ -112,6 +112,7 @@ export class FileSystem {
   }
 
   moveFile(srcId: number, destId: number) {
+    if (srcId === destId) return;
     const destDir = this.getFileById(destId);
     if (destDir?.isFile) return;
     const srcFile = this.getFileById(srcId);

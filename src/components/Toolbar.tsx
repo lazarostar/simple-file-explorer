@@ -7,10 +7,11 @@ import {
   VscRefresh,
 } from "react-icons/vsc";
 
-function ToolBar() {
+function ToolBar({ title }: { title: string | undefined }) {
   return (
     <Wrapper>
-      <VscNewFile color={colors.light1} size={20} cursor="pointer" />
+      <Paragraph>{title}</Paragraph>
+      <VscNewFile style={{marginLeft: 'auto'}} color={colors.light1} size={20} cursor="pointer" />
       <VscNewFolder color={colors.light1} size={20} cursor="pointer" />
       <VscRefresh color={colors.light1} size={20} cursor="pointer" />
       <VscCollapseAll color={colors.light1} size={20} cursor="pointer" />
@@ -20,9 +21,17 @@ function ToolBar() {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: end;
+  align-items: center;
   gap: 10px;
   padding: 5px;
+`;
+
+const Paragraph = styled.p`
+  color: ${colors.light2};
+  line-height: 1.7;
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
 `;
 
 export default ToolBar;
