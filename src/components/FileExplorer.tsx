@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import SingleFile from "./SingleFile";
-import { colors } from "./colors";
-import { FileSystem } from "../utils/FileSystem";
+import { colors } from "../utils/colors";
+import { FileSystem, SortedFile } from "../utils/FileSystem";
+import Toolbar from "./Toolbar";
 
 function FileExplorer({
   fileSystem,
@@ -13,8 +14,14 @@ function FileExplorer({
 }) {
   const [openedIds, setOpenedIds] = useState<number[]>([rootId]);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [sortedFiles, setSortedFiles] = useState<SortedFile[]>([]);
 
-  const sortedFiles = fileSystem.getSortedFilesFromParentId(rootId, openedIds);
+  useEffect(() => {
+    setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds))
+    fileSystem.on("move", () => {
+      setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds));
+    });
+  }, [fileSystem, rootId, openedIds])
 
   const handleClick = (id: number) => {
     const file = fileSystem.getFileById(id);
@@ -36,8 +43,23 @@ function FileExplorer({
     }
   };
 
+  const handleDragStart = (id: number, event: React.DragEvent) => {
+    event.dataTransfer.setData("id", "" + id);
+  };
+
+  const handleDragOver = (id: number, event: React.DragEvent) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (dropId: number, event: React.DragEvent) => {
+    event.preventDefault();
+    const dragId = Number(event.dataTransfer.getData("id"));
+    fileSystem.moveFile(dragId, dropId);
+  };
+
   return (
     <Wrapper>
+      <Toolbar />
       {sortedFiles.map((file) => {
         return (
           <SingleFile
@@ -49,6 +71,9 @@ function FileExplorer({
             isOpen={openedIds.indexOf(file.id as number) !== -1}
             selected={selectedIds.indexOf(file.id as number) !== -1}
             onClick={handleClick}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
           />
         );
       })}

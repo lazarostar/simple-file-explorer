@@ -34,6 +34,7 @@ export class File {
 export class FileSystem {
   files: File[] = [];
   biggestId: number = 0;
+  eventHandlers: { [key: string]: () => void } = {};
 
   constructor(json: FileJson | undefined) {
     if (!json) return;
@@ -108,5 +109,22 @@ export class FileSystem {
 
     findChildren(parentId, 1);
     return result;
+  }
+
+  moveFile(srcId: number, destId: number) {
+    const destDir = this.getFileById(destId);
+    if (destDir?.isFile) return;
+    const srcFile = this.getFileById(srcId);
+    if (!srcFile) return;
+    srcFile.parentId = destId;
+    this.trigger("move");
+  }
+
+  on(event: "delete" | "move", callback: () => void) {
+    this.eventHandlers[event] = callback;
+  }
+
+  trigger(event: "delete" | "move" ) {
+    this.eventHandlers[event]?.();
   }
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "./colors";
+import { colors } from "../utils/colors";
 import {
   FaFolder,
   FaFolderOpen,
@@ -16,6 +16,9 @@ function SingleFile({
   isOpen,
   selected,
   onClick,
+  onDragStart,
+  onDragOver,
+  onDrop,
 }: {
   id: number;
   name: string;
@@ -24,9 +27,20 @@ function SingleFile({
   isOpen: boolean;
   selected: boolean;
   onClick: (id: number) => void;
+  onDragStart: (id: number, event: React.DragEvent) => void;
+  onDragOver: (id: number, event: React.DragEvent) => void;
+  onDrop: (id: number, event: React.DragEvent) => void;
 }) {
   return (
-    <Wrapper depth={depth} selected={selected} onClick={() => onClick(id)}>
+    <Wrapper
+      depth={depth}
+      selected={selected}
+      onClick={() => onClick(id)}
+      draggable={true}
+      onDragStart={(event) => onDragStart(id, event)}
+      onDragOver={(event) => onDragOver(id, event)}
+      onDrop={(event) => onDrop(id, event)}
+    >
       {isFile && <FaFile color={colors.light1} />}
       {!isFile && isOpen && (
         <>
