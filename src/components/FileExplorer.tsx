@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SingleFile from "./SingleFile";
 import { colors } from "../utils/colors";
 import { FileSystem, SortedFile } from "../utils/FileSystem";
-import Toolbar from "./Toolbar";
+import ToolBar from "./ToolBar";
 
 function FileExplorer({
   fileSystem,
@@ -17,11 +17,11 @@ function FileExplorer({
   const [sortedFiles, setSortedFiles] = useState<SortedFile[]>([]);
 
   useEffect(() => {
-    setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds))
+    setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds));
     fileSystem.on("move", () => {
       setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds));
     });
-  }, [fileSystem, rootId, openedIds])
+  }, [fileSystem, rootId, openedIds]);
 
   const handleClick = (id: number) => {
     const file = fileSystem.getFileById(id);
@@ -59,7 +59,7 @@ function FileExplorer({
 
   return (
     <Wrapper>
-      <Toolbar />
+      <ToolBar />
       {sortedFiles.map((file) => {
         return (
           <SingleFile

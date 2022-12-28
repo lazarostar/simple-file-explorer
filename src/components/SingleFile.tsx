@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { colors } from "../utils/colors";
 import {
-  FaFolder,
-  FaFolderOpen,
-  FaFile,
-  FaAngleRight,
-  FaAngleDown,
-} from "react-icons/fa";
+  VscFolder,
+  VscFolderOpened,
+  VscSymbolFile,
+  VscChevronRight,
+  VscChevronDown,
+} from "react-icons/vsc";
 
 function SingleFile({
   id,
@@ -41,21 +41,21 @@ function SingleFile({
       onDragOver={(event) => onDragOver(id, event)}
       onDrop={(event) => onDrop(id, event)}
     >
-      {isFile && <FaFile color={colors.light1} />}
+      {isFile && <VscSymbolFile color={colors.light1} />}
       {!isFile && isOpen && (
         <>
           <ArrowWrapper depth={depth}>
-            <FaAngleDown color={colors.light1} />
+            <VscChevronDown color={colors.light1} />
           </ArrowWrapper>
-          <FaFolderOpen color={colors.light1} />
+          <VscFolderOpened color={colors.light1} />
         </>
       )}
       {!isFile && !isOpen && (
         <>
           <ArrowWrapper depth={depth}>
-            <FaAngleRight color={colors.light1} />
+            <VscChevronRight color={colors.light1} />
           </ArrowWrapper>
-          <FaFolder color={colors.light1} />
+          <VscFolder color={colors.light1} />
         </>
       )}
       <Paragraph>{name}</Paragraph>
