@@ -1,26 +1,12 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import FileExplorer from "./components/FileExplorer";
+import { FileJson } from "./utils/FileSystem";
+import { MOCK_FILES } from "./data/MockFiles";
+import { FileSystem } from "./utils/FileSystem";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const fileSystem: FileSystem = new FileSystem(MOCK_FILES as FileJson);
+  return <FileExplorer fileSystem={fileSystem} />;
 }
 
 export default App;
