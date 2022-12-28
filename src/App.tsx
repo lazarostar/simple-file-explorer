@@ -6,7 +6,7 @@ import { FileSystem } from "../src/utils/FileSystem";
 
 function App() {
   const fileSystem: FileSystem = new FileSystem(MOCK_FILES as FileJson);
-  return <FileExplorer fileSystem={fileSystem} />;
+  return <FileExplorer fileSystem={fileSystem} rootId={1} />;
 }
 
 export default App;

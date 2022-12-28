@@ -9,8 +9,8 @@ import {
 
 function ToolBar({ title }: { title: string | undefined }) {
   return (
-    <Wrapper>
-      <Paragraph>{title}</Paragraph>
+    <Wrapper aria-label="toolbar">
+      <Paragraph aria-label="root-name">{title}</Paragraph>
       <VscNewFile style={{marginLeft: 'auto'}} color={colors.light1} size={20} cursor="pointer" />
       <VscNewFolder color={colors.light1} size={20} cursor="pointer" />
       <VscRefresh color={colors.light1} size={20} cursor="pointer" />

@@ -7,10 +7,10 @@ import ToolBar from "./ToolBar";
 
 function FileExplorer({
   fileSystem,
-  rootId = 1,
+  rootId,
 }: {
   fileSystem: FileSystem;
-  rootId?: number;
+  rootId: number;
 }) {
   const [openedIds, setOpenedIds] = useState<number[]>([rootId]);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);

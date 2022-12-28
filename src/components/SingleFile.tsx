@@ -43,6 +43,7 @@ function SingleFile({
       onDragStart={(event) => onDragStart(id, event)}
       onDragOver={(event) => onDragOver(id, event)}
       onDrop={(event) => onDrop(id, event)}
+      aria-label={`${name}-file-row`}
     >
       {isFile && <VscSymbolFile color={colors.light1} />}
       {!isFile && isOpen && (
