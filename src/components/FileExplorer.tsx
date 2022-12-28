@@ -15,7 +15,7 @@ function FileExplorer({
   const [openedIds, setOpenedIds] = useState<number[]>([rootId]);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [sortedFiles, setSortedFiles] = useState<SortedFile[]>([]);
-  const [idToDrop, setIdToDrop] = useState<number>(-1);
+  const [dragOverFileId, setDragOverFileId] = useState<number>(-1);
 
   useEffect(() => {
     setSortedFiles(fileSystem.getSortedFilesFromParentId(rootId, openedIds));
@@ -51,7 +51,7 @@ function FileExplorer({
   const handleDragOver = (id: number, event: React.DragEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    setIdToDrop(id);
+    setDragOverFileId(id);
   };
 
   const handleDrop = (dropId: number, event: React.DragEvent) => {
@@ -59,7 +59,7 @@ function FileExplorer({
     event.stopPropagation();
     const dragId = Number(event.dataTransfer.getData("id"));
     fileSystem.moveFile(dragId, dropId);
-    setIdToDrop(-1);
+    setDragOverFileId(-1);
   };
 
   return (
@@ -78,7 +78,7 @@ function FileExplorer({
             isFile={file.isFile}
             isOpen={openedIds.indexOf(file.id as number) !== -1}
             selected={selectedIds.indexOf(file.id as number) !== -1}
-            highlighted={idToDrop === file.id}
+            highlighted={dragOverFileId === file.id}
             onClick={handleClick}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
